@@ -4,7 +4,14 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from xml.dom import minidom, Node
 import logging
-logging.basicConfig(filename='/tftpboot/phonebook_gen.log',level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
+###
+#CONSTANTES
+PATH="/tftpboot/" # Path del archivo de salida XML.
+USERDB="freepbxuser"
+PASSDB="2eXBJu5FhdKZ"
+
+logging.basicConfig(filename='/var/log/phonebook_gen.log',level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%d/%m/%Y %I:%M:%S %p')
 Base = declarative_base()
 
 class Contacto(Base):
@@ -16,7 +23,7 @@ class Contacto(Base):
         self.name = name
 	self.extension = extension
 
-engine = db.create_engine('mysql+mysqldb://freepbxuser:2eXBJu5FhdKZ@127.0.0.1:3306/asterisk')
+engine = db.create_engine('mysql+mysqldb://'+USERDB+':'+PASSDB+'@127.0.0.1:3306/asterisk')
 connection = engine.connect()
 metadata = db.MetaData()
 usuarios = db.Table('users', metadata, autoload=True, autoload_with=engine)
@@ -31,9 +38,10 @@ doc = minidom.Document()
 doc.appendChild(doc.createComment("Libreta de direcciones para telefonos Yealink"))
 groupContact = doc.createElement('root_contact')
 doc.appendChild(groupContact)
-
+cant=0;
 
 for c in listaContactos:
+	cant +=1
 	contact = doc.createElement('contact')
 	groupContact.appendChild(contact)
 	
@@ -46,7 +54,7 @@ for c in listaContactos:
         contact.setAttribute('group_id_name', "All Contacts")
 
 
-archixml = open("/tftpboot/phonebook_gen.xml","wb")
+archixml = open(PATH+"phonebook_gen.xml","wb")
 doc.writexml(archixml,'\n')
 archixml.close()
-logging.info('PhoneBook generada correctamente.')
+logging.info('PhoneBook generada correctamente. Libreta de '+str(cant)+" contactos.")
