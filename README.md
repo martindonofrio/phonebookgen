@@ -9,11 +9,19 @@ Con esta información, armar el archivo XML necesario para poder importarlo (med
 +Instalacion de dependencias
 
 yum install epel-release
+
 yum install python-pip
+
 pip install --upgrade pip
+
 pip install sqlalchemy
+
 pip install xml4h
 
+
 +Logging
+
 El resultado de la ejecucion del script lo podran ver en /var/log/phonebook_gen.log
+
+
 
