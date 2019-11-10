@@ -19,20 +19,14 @@ pip install sqlalchemy
 pip install xml4h
 
 
-<<<<<<< HEAD
 ## Logging
-=======
-+Logging
->>>>>>> origin/master
 
 El resultado de la ejecucion del script lo podran ver en /var/log/phonebook_gen.log
 
 
-<<<<<<< HEAD
 ## Cron
 
 Se deja a continuacion una linea de cron ejemplo para lograr que este script se ejecute regularmente.
 * ' *       */1     *       *       *       sudo python /usr/src/phonebookgen/pb_generator.py'
-=======
->>>>>>> origin/master
+
 
